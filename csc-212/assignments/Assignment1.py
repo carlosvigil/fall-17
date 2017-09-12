@@ -32,6 +32,24 @@ def lists_and_list_comprehensions():
     print(okay)
 
 
+def strings():
+    """Ask for user input and return result of a text search."""
+    user_text = input('Type some text here, then press enter.')
+    user_word = input('Enter a word to search for in the text previously entered.')
+    search_block = user_text
+    results = []
+    # check if a match exists before continuing
+    if user_word in search_block:
+        # store the positive results of each search and stop when there are none
+        while len(search_block) > 0 and user_word in search_block:
+            finder = search_block.find(user_word)
+            results.push(finder)
+            search_block = search_block[finder:] 
+    else:
+        print('The entered word was not found in the text.'
+    print('Word found at the following indexes of your entered text:\n', results)
+
+
 def cartesian_distance(x1_, y1_, x2_, y2_):
     """In-class exercise to find the distance between 2 points"""
     dx_ = x2_ - x1_  # find distance through subtracting x and y respectively
@@ -47,6 +65,8 @@ def main():
     formatted_ouput()
     print('\nAssignment 1 – Exercise 2:')
     lists_and_list_comprehensions()
+    print('\nExercise 3')
+    strings()
     # Extra unnecessary
     print('\nExtra:\n')
     print('cartesian_distance(40, 50, 81, 11)')
