@@ -52,8 +52,27 @@ def strings():
     print(results)
 
 
+def lists_and_inputs():
+    """Ask for a sequence of words, then, display unique words."""
+    words = []
+    new_word = ''
+    print('Enter a series of words, pressing enter after each.',
+          '\n(Press enter twice if done)\n')
+    print('incomplete; sleep is important')
+    # while True:
+    #     new_word = str(input('New word:\n')).lower()
+    #     if len(new_word) > 0:
+    #         words.append(new_word)
+    #     else:
+    #         continue
+    # unique = [x for x in words if (words.pop(words.index(x)) )]
+    # for w in words:
+    #     first = words.find(w)
+    #     words.pop(first)
+
+
 def cartesian_distance(x1_, y1_, x2_, y2_):
-    """In-class exercise to find the distance between 2 points"""
+    """In-class exercise to find the distance between 2 points."""
     dx_ = x2_ - x1_  # find distance through subtracting x and y respectively
     dy_ = y2_ - y1_
     return print('distance x is', dx_, '\ndistance y is', dy_)
@@ -62,7 +81,7 @@ def cartesian_distance(x1_, y1_, x2_, y2_):
 # Runs the defined functions of this file
 def main():
     """Run all functions in this file (with some added commentary)"""
-    creds('September 7, 2017')
+    creds('September 11, 2017')
     print('\nThus, Assignment 1 – Exercise 1:')
     formatted_ouput()
     print('\nAssignment 1 – Exercise 2:')
@@ -70,7 +89,7 @@ def main():
     print('\n*** Exercise 3 ***')
     strings()
     print('\n...and exercise 4')
-
+    lists_and_inputs()
     # Extra unnecessary
     print('\nExtra:')
     print('cartesian_distance(40, 50, 81, 11)')
