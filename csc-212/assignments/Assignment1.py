@@ -34,20 +34,22 @@ def lists_and_list_comprehensions():
 
 def strings():
     """Ask for user input and return result of a text search."""
-    user_text = input('Type some text here, then press enter.')
-    user_word = input('Enter a word to search for in the text previously entered.')
-    search_block = user_text
+    user_text = str(input(
+        'Type some text here, then press enter.\n')).lower()
+    user_word = str(input(
+        'Enter a word to search for in the text entered.\n')).lower()
+    index = 0
     results = []
-    # check if a match exists before continuing
-    if user_word in search_block:
-        # store the positive results of each search and stop when there are none
-        while len(search_block) > 0 and user_word in search_block:
-            finder = search_block.find(user_word)
-            results.push(finder)
-            search_block = search_block[finder:] 
-    else:
-        print('The entered word was not found in the text.'
-    print('Word found at the following indexes of your entered text:\n', results)
+    if user_word not in user_text:
+        print('The entered word was not found in the text.')
+        return
+    # store the positive results of each search, stop when there are none
+    while user_word in user_text[index:len(user_text)] and index >= 0:
+        finder = user_text.find(user_word, index, len(user_text))
+        index = finder + len(user_word)
+        results.append(finder)
+    print('Word found at the following indexes of your entered text:')
+    print(results)
 
 
 def cartesian_distance(x1_, y1_, x2_, y2_):
@@ -65,10 +67,12 @@ def main():
     formatted_ouput()
     print('\nAssignment 1 – Exercise 2:')
     lists_and_list_comprehensions()
-    print('\nExercise 3')
+    print('\n*** Exercise 3 ***')
     strings()
+    print('\n...and exercise 4')
+
     # Extra unnecessary
-    print('\nExtra:\n')
+    print('\nExtra:')
     print('cartesian_distance(40, 50, 81, 11)')
     cartesian_distance(40, 50, 81, 11)
     print("\nright_justify('allo')\n", right_justify('allo'))
