@@ -7,13 +7,17 @@ class Student:
     attributes: name, attend, grades
     """
 
-    def __init__(self, _name='', _attend=0, _grades=''):
+    def __init__(self, _name='', _attend=0, _grades=None):
         """Instantiates the object with relative blanks for the fields of
         the student's name, attendance, and grades.
         """
         self._name = _name
         self._attend = _attend
-        self._grades = list(_grades)
+        self._grades = _grades
+
+    def __str__(self):
+        return '%s\nAttendance: %d\nGrades: %s' % (self._name, self._attend,
+                                                   self._grades)
 
     def set_name(self, name):
         """Mutates the _name attribute of the Student instance."""
@@ -33,6 +37,8 @@ class Student:
 
     def add_grade(self, grade):
         """Append a new grade value to the field of grades."""
+        if self._grades is None:
+            self._grades = []
         self._grades.append(grade)
 
     def get_grades(self):
@@ -46,10 +52,8 @@ def main():
     allen.set_name("Allen Minium")
     allen.attend()
     allen.add_grade(100)
+    allen.add_grade(100)
     print(allen)
-    print(allen.get_name())
-    print(allen.get_attend())
-    print(allen.get_grades())
 
 
 if __name__ == '__main__':
