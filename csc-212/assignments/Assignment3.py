@@ -1,5 +1,4 @@
 """Hi"""
-# TODO: add doc comments
 
 
 class Hamburger:
@@ -22,7 +21,7 @@ class Hamburger:
         """Access the _weight attribute of the given instance, returning
         a string with ' oz' appended.
         """
-        # TODO
+        # TODO: TEST
         return str(self._weight + ' oz')
 
     def set_doneness(self, cook):
@@ -30,8 +29,7 @@ class Hamburger:
         self._doneness = cook
 
     def get_doneness(self):
-        """s"""
-        # TODO
+        """Access the _doneness attribute of the given instance."""
         return self._doneness
 
     def set_cheese(self, cheese):
@@ -39,8 +37,7 @@ class Hamburger:
         self._cheese = cheese
 
     def get_cheese(self):
-        """s"""
-        # TODO
+        """Access the _cheese attribute of the given instance."""
         return self._cheese
 
     def set_toppings(self, slip):
@@ -50,9 +47,10 @@ class Hamburger:
         self._toppings = slip.lower().split()
 
     def get_toppings(self):
-        """s"""
-        # TODO
-        return self._toppings
+        """Access the _toppings attribute of the given instance, joining each
+        list element with a space.
+        """
+        return ' '.join(self._toppings)
 
     def bite(self):
         """Lessen the weight of the instantiated burger by one ounce."""
@@ -70,13 +68,16 @@ def ask_for_burger():
         ounces = input('Enter it in ounces: ')
         print('Great, thanks! Now, how well would you like your burger cooked?')
         cook_it = input('Enter here: ')
-        print('OK. What about cheese?\n')
-        cheese = input("Please enter 'True' or 'False': ")
+        print('OK. What about cheese?')
+        cheese = yes_no_input()
         print('Alright, now what toppings do you want?')
         topp = input('Enter each topping seperated by a space: ')
-        return Hamburger(ounces, cook_it, cheese, topp)
 
-    print('OK! One classic burger')
+        custom_order = Hamburger(ounces, cook_it, cheese, topp)
+        print(custom_order)
+        return custom_order
+
+    print('\nOK! One classic burger')
     return Hamburger()
 
 
@@ -88,13 +89,15 @@ def yes_no_input():
 
     while not yup or not nope:
         answer = input("Type 'yes' or 'no': ").lower()
+        yup = answer == 'yes' or answer == 'y'
+        nope = answer == 'no' or answer == 'n'
+
         if yup:
             return True
         elif nope:
             return False
         else:
             print('Error, please try again.')
-        # TODO
 
 
 def creds(day):
@@ -105,9 +108,8 @@ def creds(day):
 def main():
     """Runs the defined functions or methods."""
     creds('October 1, 2017')
-    yah = Hamburger()
-    print(yah)
-
+    order = ask_for_burger()
+    print(order)
 
 if __name__ == '__main__':
     main()
