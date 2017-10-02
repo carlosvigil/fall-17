@@ -1,48 +1,100 @@
 """Hi"""
+# TODO: add doc comments
 
 
 class Hamburger:
-    """The order slip at your local burger spot.""" 
-# TODO: add doc comments
-    def __init__(self):
-        self._weight = 0
-        self._doneness = None
-        self._cheese = bool
-        self._toppings = []
+    """The order slip at your local burger spot."""
+    def __init__(self, weight=8, done='well', cheese=False, topp='lettuce'):
+        self._weight = weight
+        self._doneness = done
+        self._cheese = cheese
+        # Toppings will be a list if user customizes their order
+        self._toppings = topp
 
     def __str__(self):
         return str(vars(self))
 
     def set_weight(self, weight):
-    def get_weight(self):
-        return self._weight
+        """Mutate the _weight attribute of the given instance."""
+        self._weight = weight
 
-    def set_doneness(self, cooked):
+    def get_weight(self):
+        """Access the _weight attribute of the given instance, returning
+        a string with ' oz' appended.
+        """
+        # TODO
+        return str(self._weight + ' oz')
+
+    def set_doneness(self, cook):
+        """Mutate the _doneness attribute of the given instance."""
+        self._doneness = cook
+
     def get_doneness(self):
+        """s"""
+        # TODO
         return self._doneness
 
     def set_cheese(self, cheese):
+        """Mutate the _cheese attribute of the given instance."""
+        self._cheese = cheese
+
     def get_cheese(self):
+        """s"""
+        # TODO
         return self._cheese
 
-    def set_toppings(self):
+    def set_toppings(self, slip):
+        """Mutate the _toppings attribute of the given instance, splitting a
+        given string into a list.
+        """
+        self._toppings = slip.lower().split()
+
     def get_toppings(self):
+        """s"""
+        # TODO
         return self._toppings
 
-    def bite():
+    def bite(self):
+        """Lessen the weight of the instantiated burger by one ounce."""
         if self._weight > 0:
             self._weight -= 1
 
 
 def ask_for_burger():
-    order = Hamburger()
-    print('Welcome to Burger Place!\nHow large would you like your burger')
-    ounces = input('Enter it in ounces: ')
-    print('Great, thanks! Now, how well would you like your burger cooked?')
-    cook_it = input('Enter here: ')
-    print('OK. What about cheese?\n')
-    cheese = input("Please enter 'True' or 'False': ")
+    """Aquire user input, decide how to instantiate a Hamburger class."""
+    print('Welcome to Burger Place!')
+    print('Would you like to customize your burger?')
 
+    if yes_no_input():
+        print('How large would you like your burger?')
+        ounces = input('Enter it in ounces: ')
+        print('Great, thanks! Now, how well would you like your burger cooked?')
+        cook_it = input('Enter here: ')
+        print('OK. What about cheese?\n')
+        cheese = input("Please enter 'True' or 'False': ")
+        print('Alright, now what toppings do you want?')
+        topp = input('Enter each topping seperated by a space: ')
+        return Hamburger(ounces, cook_it, cheese, topp)
+
+    print('OK! One classic burger')
+    return Hamburger()
+
+
+def yes_no_input():
+    """Accept a yes or no answer, then, return a corresponding boolean."""
+    answer = ''
+    yup = answer == 'yes' or answer == 'y'
+    nope = answer == 'no' or answer == 'n'
+
+    while not yup or not nope:
+        answer = input("Type 'yes' or 'no': ").lower()
+        if yup:
+            return True
+        elif nope:
+            return False
+        else:
+            print('Error, please try again.')
+        # TODO
 
 
 def creds(day):
