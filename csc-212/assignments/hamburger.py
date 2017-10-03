@@ -1,39 +1,20 @@
-"""Hi"""
-
-
-def y_or_n():
-    """Accept a yes or no answer, then, return a corresponding boolean."""
-    answer = ''
-    yup = answer == 'yes' or answer == 'y'
-    nope = answer == 'no' or answer == 'n'
-
-    while not yup or not nope:
-        answer = input("Type 'yes' or 'no': ").lower()
-        yup = answer == 'yes' or answer == 'y'
-        nope = answer == 'no' or answer == 'n'
-
-        if yup:
-            return True
-        elif nope:
-            return False
-        else:
-            print('Error, please try again.')
-
+"""Creates hamburgers and eats them really fast."""
+from reuse import creds, y_or_n
 
 class Hamburger:
     """The order slip at your local burger spot."""
-    def __init__(self, weight=8, done='well', cheese=False, topp='lettuce'):
-        self._weight = int(weight)
-        self._doneness = done
-        self._cheese = cheese
-        # Toppings will be a list if user customizes their order
-        self._toppings = topp
+    def __init__(self):
+        self._weight = 8
+        self._doneness = 'medium'
+        self._cheese = False
+        self._toppings = ['lettuce']
 
     def __str__(self):
+        tstr = ' '.join(self._toppings)
         return ('{0._weight} oz\n'
                 'Cooked {0._doneness}\n'
                 'Cheese: {0._cheese}\n'
-                'Toppings: {0._toppings}').format(self)
+                'Toppings: {1}').format(self, tstr)
 
     def set_weight(self, weight):
         """Mutate the _weight attribute of the given instance, converting
@@ -67,7 +48,7 @@ class Hamburger:
         """Mutate the _toppings attribute of the given instance, splitting a
         given string into a list.
         """
-        self._toppings = slip.lower().split()
+        self._toppings = slip.lower().split(' ')
 
     def get_toppings(self):
         """Access the _toppings attribute of the given instance, joining each
@@ -98,43 +79,31 @@ def eat(order):
 
 def order_burger():
     """Aquire user input, decide how to instantiate a Hamburger class."""
-    print('Welcome to Burger Place!')
+    order = Hamburger()
     print('Would you like to customize your burger?')
 
     if y_or_n():
         print('How large would you like your burger?')
-        ounces = input('Enter it in ounces: ')
-        print('Great, thanks! Now, how well would you like your burger cooked?')
-        cook_it = input('Enter here: ')
+        order.set_weight(input('Enter it in ounces: '))
+        print('Great, thanks! How well would you like your burger cooked?')
+        order.set_doneness(input('Enter here: '))
         print('OK. What about cheese?')
-        cheese = y_or_n()
+        order.set_cheese(y_or_n())
         print('Alright, now what toppings do you want?')
-        topp = input('Enter each topping seperated by a space: ')
-
-        custom_order = Hamburger(ounces, cook_it, cheese, topp)
+        order.set_toppings(input('Enter each topping seperated by a space: '))
         print('\nYour custom order...')
-        print(custom_order)
-        print()
-        eat(custom_order)
     else:
         print('\nOK! One classic burger!')
-        classic_order = Hamburger()
-        print(classic_order)
-        print()
-        eat(classic_order)
 
-
-def creds(day):
-    """seal of origin; take day, output an assignment header."""
-    print('\n# Carlos Vigil'
-          '\n# A. Abd El-Raouf'
-          '\n# CSC 212-02'
-          '\n# {}\n'.format(day))
+    print(order)
+    print()
+    eat(order)
 
 
 def main():
     """Runs the defined functions or methods."""
     creds('October 2, 2017')
+    print('Welcome to Burger Place!')
     order_burger()
 
 
