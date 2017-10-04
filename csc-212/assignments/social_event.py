@@ -40,10 +40,10 @@ class SocialEvent:
 
 def ask_for_five():
     """Input 5 SocialEvent instances."""
-    events = {}
+    events = []
     for num in range(5):
-        events[num] = (SocialEvent())
-        print('Event {}'.format(num + 1))
+        events.append(SocialEvent())
+        print('\nEvent {}'.format(num + 1))
         events[num].set_title(input('Enter an event title: '))
         events[num].set_date(input('Enter the event\'s date: '))
         events[num].set_peeps(input('Enter the number of attendees: '))
@@ -51,10 +51,11 @@ def ask_for_five():
 
 def sort_attendees(events):
     """Sort the events by the number of attendees."""
-    by_attendees = sorted(events, key=SocialEvent: get_peeps())
+    by_attendees = sorted(events, key=lambda event: event.get_peeps())
 
     for num in range(5):
-        print(by_attendees[num - 1])
+        print()
+        print(by_attendees[num])
 
 def main():
     """Run program to test the class and its methods."""

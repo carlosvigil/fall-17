@@ -102,7 +102,7 @@ def order_burger():
 
 def main():
     """Runs the defined functions or methods."""
-    creds('October 2, 2017')
+    creds('October 3, 2017')
     print('Welcome to Burger Place!')
     order_burger()
 
