@@ -79,26 +79,29 @@ class Task:
 
 class Simulation:
     """Constructor for simulation class."""
-    def __init__(self, num_sec=5000, pages_per_min=5, dual_device=False):
-        self.num_sec = num_sec
-        self.pages_per_min = pages_per_min
-        self.dual_device = dual_device
+    def __init__(self, cfg):
+        self.duration_sim = cfg['duration_sim']
+        self.min_task = cfg['min_task']
+        self.max_task = cfg['max_task']
+        self.num_devices = cfg['num_devices']
+        self.page_rate_one = cfg['page_rate_one']
+        self.page_rate_two = cfg['page_rate_two']
 
-        if self.dual_device:
-            self.device = [Printer(), Printer()]
+        if self.num_devices == 1:
+            self.device = Printer(self.page_rate_one)
         else:
-            self.device = Printer(pages_per_min)
+            self.device = [Printer(self.page_rate_one), Printer(self.page_rate_two)]
 
         self.print_queue = Queue()
         self.wait_times = []
 
     def start(self):
         """Use the Boolean attribute to start simulation."""
-        self.single_device_sim() if not self.dual_device else self.dual_device_sim()
+        self.single_device_sim() if self.num_devices == 1 else self.dual_device_sim()
 
     def single_device_sim(self):
         """A simulation with a single printing device."""
-        for current_sec in range(self.num_sec):
+        for current_sec in range(self.duration_sim):
             if self.new_print_task():
                 task = Task(current_sec)
                 self.print_queue.enqueue(task)
@@ -113,19 +116,24 @@ class Simulation:
 
     def dual_device_sim(self):
         """A simulation with two printing devices."""
-        # TODO: Logic for two printers
-        # for current_sec in range(self.num_sec):
-        #     if new_print_task():
-        #         task = Task(current_sec)
-        #         print_queue.enqueue(task)
+        for current_sec in range(self.duration_sim):
+            if self.new_print_task():
+                task = Task(current_sec)
+                self.print_queue.enqueue(task)
 
-        #     if (not device.busy()) and (not print_queue.is_empty()):
-        #         next_task = print_queue.dequeue()
-        #         self.wait_times.append(next_task.wait_time(current_sec))
-        #         device.start_next(next_task)
+            if (not self.device[0].busy()) and (not self.print_queue.is_empty()):
+                next_task = self.print_queue.dequeue()
+                self.wait_times.append(next_task.wait_time(current_sec))
+                self.device[0].start_next(next_task)
 
-        #     device.tick()
-        pass
+            elif (not self.device[1].busy()) and (not self.print_queue.is_empty()):
+                next_task = self.print_queue.dequeue()
+                self.wait_times.append(next_task.wait_time(current_sec))
+                self.device[1].start_next(next_task)
+
+            self.device[0].tick()
+            self.device[1].tick()
+        self.avg_wait()
 
     def avg_wait(self):
         wait = sum(self.wait_times)/len(self.wait_times)
@@ -181,8 +189,8 @@ def read_config():
 
 def main():
     cfg = read_config()
-    for i in range(10):
-        Simulation().start()
+    for sim in range(cfg['num_sims']):
+        Simulation(cfg).start()
 
 
 if __name__ == "__main__":
