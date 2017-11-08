@@ -7,13 +7,13 @@ from Node import Node
 
 class OrderedList:
     """List is empty upon creation and the head reference is None."""
+
     def __init__(self):
         self.head = None
 
     def is_empty(self):
         """Returns True if list is empty, False otherwise."""
         return self.head is None
-
 
     def add(self, item):
         """Add an element to head of the list."""
@@ -81,7 +81,7 @@ class OrderedList:
             if data == item:
                 found = True
             # stop operation if the value has been passed
-            elif data > item:
+            elif data < item:
                 abort = True
             # go to the next element
             else:
@@ -134,9 +134,11 @@ def main():
     print("List size:", aList.size())
     print("List content: ")
     aList.print_list()
-    print('\nAssignment 6\n...for item 5\nIndex: ')
-    print('Search: ')
+    print('\nAssignment 6\n...for item 5\nIndex: ', end='')
+    print(aList.index(5))
+    print('Search: ', end='')
     print(aList.search(5))
+
 
 if __name__ == "__main__":
     main()
