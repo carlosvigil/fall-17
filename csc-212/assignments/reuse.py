@@ -1,5 +1,6 @@
 """Oft reused code."""
 
+
 def creds(day):
     """seal of origin; take day, output an assignment header."""
     print('\n# Carlos Vigil'
