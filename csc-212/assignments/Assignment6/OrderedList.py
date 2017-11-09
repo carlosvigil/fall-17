@@ -45,9 +45,31 @@ class OrderedList:
         if found:
             if previous is None:
                 self.head = current.get_next()
-                # the element to be deleted is not the head
+            # the element to be deleted is not the head
             else:
                 previous.set_next(current.get_next())
+
+    def pop(self, pos=None):
+        if self.head is None:
+            return print('The list is empty.')
+
+        current = self.head
+        # Without argument: set iterator to pop the last item in the list
+        if pos is None:
+            pos = self.size() - 1
+        # access the position in the list
+        # reassign the head if position is head
+        if pos == 0:
+            self.head = current.get_next()
+        elif pos > 0:
+            for node in range(pos):
+                previous = current
+                current = current.get_next()
+            # update previous node's reference
+            previous.set_next(current.get_next())
+        data = current.get_data()
+        del current
+        return data
 
     def replace(self, pos, val):
         """Given a position, and a value, the method replaces the value of the
@@ -105,7 +127,7 @@ class OrderedList:
         # Traverse the list one element at a time.  We know
         # we reached the end when the next reference is None
         while current is not None:
-            count = count + 1
+            count += 1
             current = current.get_next()
         return count
 
@@ -130,14 +152,19 @@ def main():
     aList.add(3)
     aList.add(5)
     aList.add(8)
+    aList.add(9)
 
     print("List size:", aList.size())
     print("List content: ")
     aList.print_list()
-    print('\nAssignment 6\n...for item 5\nIndex: ', end='')
-    print(aList.index(5))
-    print('Search: ', end='')
-    print(aList.search(5))
+    print('\nAssignment 6\n...for item 5\n  Index: ', aList.index(5))
+    print('  Search: ', aList.search(5))
+    print('Pop: ', aList.pop())
+    print("List content: ")
+    aList.print_list()
+    print('Pop(1): ', aList.pop(1))
+    print("List content: ")
+    aList.print_list()
 
 
 if __name__ == "__main__":
