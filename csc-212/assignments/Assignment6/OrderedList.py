@@ -16,14 +16,28 @@ class OrderedList:
         return self.head is None
 
     def add(self, item):
-        """Add an element to head of the list."""
+        """Add an element to head of the list, maintaining value order."""
         # Create a node using item as its data
         temp = Node(item)
-        # make the next reference of the new node refer to the head
-        # of the list
-        temp.set_next(self.head)
-        # modify the list head so that it references the new node
-        self.head = temp
+        current = self.head
+        previous = None
+        stop = False
+
+        while current is not None and not stop:
+            if current.get_data() > item:
+                stop = True
+            else:
+                previous = current
+                current = current.get_next()
+        if previous is None:
+            # make the next reference of the new node refer to the head
+            # of the list
+            temp.set_next(self.head)
+            # modify the list head so that it references the new node
+            self.head = temp
+        else:
+            temp.set_next(current)
+            previous.set_next(temp)
 
     def remove(self, item):
         """Remove the first occurrence of item from the list."""
@@ -117,7 +131,9 @@ class OrderedList:
 
     def index(self, item):
         """Return the index of a given item in the list."""
-        return self.practical_search(item)[1]
+        if self.search(item):
+            return self.practical_search(item)[1]
+        print('{0}, not in the list.'.format(item))
 
     def size(self):
         """Returns the size of the list."""
@@ -146,26 +162,25 @@ class OrderedList:
 
 
 def main():
-    # create a list and add some elements to it
-    aList = OrderedList()
-    print("Adding 3, 5, and 8 to the list.")
-    aList.add(3)
-    aList.add(5)
-    aList.add(8)
-    aList.add(9)
+    """Test defined class and methods."""
+    linked_list = OrderedList()
+    # add a random integer to the ordered list
+    for num in range(15):
+        linked_list.add(randint(1, 5))
 
-    print("List size:", aList.size())
     print("List content: ")
-    aList.print_list()
-    print('\nAssignment 6\n...for item 5\n  Index: ', aList.index(5))
-    print('  Search: ', aList.search(5))
-    print('Pop: ', aList.pop())
+    linked_list.print_list()
+
+    print('\nAssignment 6\n...for item 5\n  Index: ', linked_list.index(5))
+    print('  Search: ', linked_list.search(5))
+    print('Pop: ', linked_list.pop())
     print("List content: ")
-    aList.print_list()
-    print('Pop(1): ', aList.pop(1))
+    linked_list.print_list()
+    print('Pop(1): ', linked_list.pop(1))
     print("List content: ")
-    aList.print_list()
+    linked_list.print_list()
 
 
 if __name__ == "__main__":
+    from random import randint
     main()
