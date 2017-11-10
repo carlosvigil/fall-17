@@ -117,7 +117,7 @@ class OrderedList:
             if data == item:
                 found = True
             # stop operation if the value has been passed
-            elif data < item:
+            elif data > item:
                 abort = True
             # go to the next element
             else:
@@ -168,15 +168,22 @@ def main():
     for num in range(15):
         linked_list.add(randint(1, 5))
 
+    print('\nAssignment 6\n')
     print("List content: ")
     linked_list.print_list()
 
-    print('\nAssignment 6\n...for item 5\n  Index: ', linked_list.index(5))
-    print('  Search: ', linked_list.search(5))
-    print('Pop: ', linked_list.pop())
+    # search and index methods
+    if linked_list.search(3):
+        print('...for item 3\n  Search: True')
+        print('  Index: ', linked_list.index(3))
+    elif linked_list.search(5):
+        print('...for item 5\n  Search: True')
+        print('  Index: ', linked_list.index(5))
+    # pop method
+    print('\nPop last item: ', linked_list.pop())
     print("List content: ")
     linked_list.print_list()
-    print('Pop(1): ', linked_list.pop(1))
+    print('Pop at position 1: ', linked_list.pop(1))
     print("List content: ")
     linked_list.print_list()
 
