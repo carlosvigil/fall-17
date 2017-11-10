@@ -147,6 +147,19 @@ class OrderedList:
             current = current.get_next()
         return count
 
+    def duplicates(self):
+        for item in range(self.size() - 1):
+            prev_node = None
+            curr_node = self.head()
+            next_node = curr_node.get_next()
+            curr_val = curr_node.get_data()
+            next_val = next_node.get_data()
+            count = 0
+            while
+
+    def list_distinct(self):
+        pass
+
     def print_list(self):
         """Print a list of the node values."""
         if not self.is_empty():
