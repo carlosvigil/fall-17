@@ -148,14 +148,31 @@ class OrderedList:
         return count
 
     def duplicates(self):
-        for item in range(self.size() - 1):
-            prev_node = None
-            curr_node = self.head()
-            next_node = curr_node.get_next()
+        curr_node = self.head
+
+        for index in range(5):
+            # assign current and next values
             curr_val = curr_node.get_data()
-            next_val = next_node.get_data()
-            count = 0
-            while
+            if curr_node.get_next() is not None:
+                next_node = curr_node.get_next()
+                next_val = next_node.get_data()
+            count = 1
+            stop = False
+
+            # check the next value
+            while curr_val == next_val and not stop:
+                count += 1
+                # reassign current and next shifting one index over in the list
+                curr_node = next_node
+                curr_val = next_val
+                if curr_node.get_next() is not None:
+                    next_node = curr_node.get_next()
+                    next_val = next_node.get_data()
+                else:
+                    stop = True
+
+            print('{0} appears {1} time(s) in the list.'.format(curr_val, count))
+            curr_node = next_node
 
     def list_distinct(self):
         pass
@@ -199,6 +216,7 @@ def main():
     print('Pop at position 1: ', linked_list.pop(1))
     print("List content: ")
     linked_list.print_list()
+    linked_list.duplicates()
 
 
 if __name__ == "__main__":
