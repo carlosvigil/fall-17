@@ -181,10 +181,6 @@ class OrderedList:
     def distinct_list(self):
         """Reduces the list to unique node values."""
         curr_node = self.head
-        # curr_val = curr_node.get_data()
-        # next_node = curr_node.get_next()
-        # next_val = next_node.get_data()
-
         # run until the end of the list
         while curr_node is not None:
             curr_val = curr_node.get_data() if curr_node else None
