@@ -7,21 +7,21 @@ Adopted from Section 3.9 in the textbook
 class Node:
     def __init__(self, init_data):
         """Create a Node object and initialize its data."""
-        self.data = init_data
-        self.next = None
+        self._data = init_data
+        self._next = None
 
     def get_data(self):
         """Accessor for node data"""
-        return self.data
+        return self._data
 
     def get_next(self):
         """Accessor for next reference"""
-        return self.next
+        return self._next
 
     def set_data(self, new_data):
         """Mutator for node data"""
-        self.data = new_data
+        self._data = new_data
 
     def set_next(self, new_next):
         """Mutator for next reference"""
-        self.next = new_next
+        self._next = new_next

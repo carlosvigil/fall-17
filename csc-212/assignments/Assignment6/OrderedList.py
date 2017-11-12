@@ -1,4 +1,4 @@
-"""Implementation of an ordered list ADT as a linked list.
+"""Implementation of an ordered linked list ADT.
 Adopted from Section 3.9 of the textbook.
 """
 
@@ -6,9 +6,8 @@ from Node import Node
 
 
 class OrderedList:
-    """List is empty upon creation and the head reference is None."""
-
     def __init__(self):
+        """List is empty upon creation and the head reference is None."""
         self.head = None
 
     def is_empty(self):
@@ -16,79 +15,82 @@ class OrderedList:
         return self.head is None
 
     def add(self, item):
-        """Add an element to head of the list, maintaining value order."""
-        # Create a node using item as its data
+        """Add an `item` to the head of the list, maintaining value order."""
+        # Create a temporary node using the item argument for the data param
         temp = Node(item)
         current = self.head
         previous = None
         stop = False
 
         while current is not None and not stop:
+            # store items in an ascending order
             if current.get_data() > item:
                 stop = True
             else:
                 previous = current
                 current = current.get_next()
         if previous is None:
-            # make the next reference of the new node refer to the head
-            # of the list
+            # update the head
             temp.set_next(self.head)
-            # modify the list head so that it references the new node
             self.head = temp
         else:
+            # insert the new node
             temp.set_next(current)
             previous.set_next(temp)
 
     def remove(self, item):
-        """Remove the first occurrence of item from the list."""
+        """Remove the first occurrence of parameter `item` from the list."""
         # keep track of current and previous elements
         current = self.head
         previous = None
         found = False
         # traverse the list
         while current is not None and not found:
-            # if we have a match, stop
+            # when the node value matches the argument value stop searching
             if current.get_data() == item:
                 found = True
             # otherwise advance current and next references
             else:
                 previous = current
                 current = current.get_next()
-
-        # the element to be deleted is the head of the list
         if found:
+            # when the node to be deleted is the head of the list
             if previous is None:
                 self.head = current.get_next()
-            # the element to be deleted is not the head
+            # update references during a non-head node removal
             else:
                 previous.set_next(current.get_next())
 
     def pop(self, pos=None):
+        """Return and remove an item in the list, the last item if no `pos`
+        argument is provided.
+        """
+        # empty check
         if self.head is None:
             return print('The list is empty.')
+        else:
+            current = self.head
 
-        current = self.head
         # Without argument: set iterator to pop the last item in the list
-        if pos is None:
+        if not pos:
             pos = self.size() - 1
-        # access the position in the list
-        # reassign the head if position is head
+        # reassign the head if position is the head
         if pos == 0:
             self.head = current.get_next()
+        # traverse the list up to the position
         elif pos > 0:
             for node in range(pos):
                 previous = current
                 current = current.get_next()
-            # update previous node's reference
+            # update the previous node's reference
             previous.set_next(current.get_next())
         data = current.get_data()
         del current
         return data
 
-    def replace(self, pos, val):
-        """Given a position, and a value, the method replaces the value of the
-        element at the position, where position 0 corresponds to the head of
-        the list with the new value.
+    def replace(self, pos, data):
+        """Given a position and a value, the method replaces the `data` of the
+        node at the list position, where `pos` 0 corresponds to `self.head`.
         """
         # before proceeding check if there's anything in the list
         if not self.is_empty():
@@ -96,24 +98,24 @@ class OrderedList:
             if self.size() - 1 > pos < 0:
                 return print('That position is out of range of the list size.')
 
-            current = self.head
             # iterate through the list until arriving at the given position
+            current = self.head
             for node in range(pos):
                 current = current.get_next()
-            return current.set_data(val)
+            return current.set_data(data)
 
         print('This list is empty.')
 
     def practical_search(self, item):
-        """Search for an item in the list, return node and index."""
+        """Search for an `item` in the list; return in list node and `index`"""
         current = self.head
         found = False
         abort = False
         index = 0
-        # As long as the element is not found, nor search aborted, and haven't
-        # reached the end of the list
+        # search for the item
         while current is not None and not found and not abort:
             data = current.get_data()
+            # stop if found
             if data == item:
                 found = True
             # stop operation if the value has been passed
@@ -123,14 +125,15 @@ class OrderedList:
             else:
                 index += 1
                 current = current.get_next()
-        return [current, index] if found else None
+        if found:
+            return [current, index]
 
     def search(self, item):
-        """Search for an item in the list, return a boolean."""
+        """Search for an `item` in the list, return a boolean."""
         return True if self.practical_search(item) else False
 
     def index(self, item):
-        """Return the index of a given item in the list."""
+        """Return the index of a given `item` in the list."""
         if self.search(item):
             return self.practical_search(item)[1]
         print('{0}, not in the list.'.format(item))
@@ -147,48 +150,71 @@ class OrderedList:
             current = current.get_next()
         return count
 
+        """Checks if the value is the only one in the list."""
+
     def duplicates(self):
+        """Print the number of times a value is represented by a different
+        node in the list.
+        """
+        if self.is_empty():
+            print('The list is empty.')
+
+        list_size = range(self.size())
         curr_node = self.head
-
-        for index in range(5):
-            # assign current and next values
+        values = {}
+        # traverse the list adding up a count of each value's appearance
+        for node in list_size:
             curr_val = curr_node.get_data()
-            if curr_node.get_next() is not None:
-                next_node = curr_node.get_next()
-                next_val = next_node.get_data()
-            count = 1
-            stop = False
-
-            # check the next value
-            while curr_val == next_val and not stop:
-                count += 1
-                # reassign current and next shifting one index over in the list
+            next_node = curr_node.get_next()
+            # start counting
+            if curr_val in values:
+                values[curr_val] += 1
+            else:
+                values[curr_val] = 1
+            # move to the next
+            if next_node is not None:
                 curr_node = next_node
-                curr_val = next_val
-                if curr_node.get_next() is not None:
-                    next_node = curr_node.get_next()
-                    next_val = next_node.get_data()
+        # display results
+        for val, count in values.items():
+            print('{0} appears {1} time(s).'.format(val, count))
+
+    def distinct_list(self):
+        """Reduces the list to unique node values."""
+        curr_node = self.head
+        next_node = curr_node.get_next()
+
+        while next_node is not None:
+            curr_val = curr_node.get_data()
+            next_val = next_node.get_data()
+            # delete other nodes with identical values as the current one
+            while curr_val == next_val:
+                # load a node two steps over to reassign it as the next_node
+                if next_node.get_next():
+                    temp = next_node.get_next()
+                    curr_node.set_next(temp)
                 else:
-                    stop = True
-
-            print('{0} appears {1} time(s) in the list.'.format(curr_val, count))
+                    del next_node
+                    continue
+                del next_node
+                next_node = temp
+                # reset the next_value
+                next_val = next_node.get_data()
+            # reached when all duplicates for a value have been deleted
             curr_node = next_node
-
-    def list_distinct(self):
-        pass
+            next_node = curr_node.get_next()
 
     def print_list(self):
         """Print a list of the node values."""
         if not self.is_empty():
+            # collect the node values
             to_print = []
             current = self.head
-
+            # traverse the list
             for node in range(self.size()):
                 to_print.append(current.get_data())
                 current = current.get_next()
-        else:
-            return print('List is empty.')
-        print(to_print)
+            return print(to_print)
+        return print('List is empty.')
 
 
 def main():
@@ -217,6 +243,9 @@ def main():
     print("List content: ")
     linked_list.print_list()
     linked_list.duplicates()
+    # linked_list.distinct_list()
+    # print("List content: ")
+    # linked_list.print_list()
 
 
 if __name__ == "__main__":
