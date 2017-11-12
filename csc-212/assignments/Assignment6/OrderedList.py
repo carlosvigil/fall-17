@@ -181,27 +181,26 @@ class OrderedList:
     def distinct_list(self):
         """Reduces the list to unique node values."""
         curr_node = self.head
-        next_node = curr_node.get_next()
+        # curr_val = curr_node.get_data()
+        # next_node = curr_node.get_next()
+        # next_val = next_node.get_data()
 
-        while next_node is not None:
-            curr_val = curr_node.get_data()
-            next_val = next_node.get_data()
+        # run until the end of the list
+        while curr_node is not None:
+            curr_val = curr_node.get_data() if curr_node else None
+            next_node = curr_node.get_next()
+            # get the next node's value if there is one
+            next_val = next_node.get_data() if next_node else None
             # delete other nodes with identical values as the current one
             while curr_val == next_val:
                 # load a node two steps over to reassign it as the next_node
-                if next_node.get_next():
-                    temp = next_node.get_next()
-                    curr_node.set_next(temp)
-                else:
-                    del next_node
-                    continue
-                del next_node
+                temp = next_node.get_next()
+                curr_node.set_next(temp)
                 next_node = temp
-                # reset the next_value
-                next_val = next_node.get_data()
-            # reached when all duplicates for a value have been deleted
+                # if there's another node, load it's value and compare again
+                next_val = next_node.get_data() if next_node else None
+            # move to next node when values do not match
             curr_node = next_node
-            next_node = curr_node.get_next()
 
     def print_list(self):
         """Print a list of the node values."""
@@ -219,16 +218,17 @@ class OrderedList:
 
 def main():
     """Test defined class and methods."""
+    print('\n*\*/*\*/ Assignment 6 \*/*\*/*\n')
+
     linked_list = OrderedList()
-    # add a random integer to the ordered list
+    # add fifteen random integers to the ordered list
     for num in range(15):
         linked_list.add(randint(1, 5))
-
-    print('\nAssignment 6\n')
+    # display the generated list values
     print("List content: ")
     linked_list.print_list()
-
-    # search and index methods
+    print()
+    # search & index methods
     if linked_list.search(3):
         print('...for item 3\n  Search: True')
         print('  Index: ', linked_list.index(3))
@@ -237,17 +237,18 @@ def main():
         print('  Index: ', linked_list.index(5))
     # pop method
     print('\nPop last item: ', linked_list.pop())
-    print("List content: ")
-    linked_list.print_list()
     print('Pop at position 1: ', linked_list.pop(1))
     print("List content: ")
     linked_list.print_list()
+    print()
+    # duplicates & distinct
     linked_list.duplicates()
-    # linked_list.distinct_list()
-    # print("List content: ")
-    # linked_list.print_list()
+    linked_list.distinct_list()
+    print("Removing duplicates: ")
+    linked_list.print_list()
 
 
 if __name__ == "__main__":
     from random import randint
-    main()
+    for num in range(5):
+        main()
