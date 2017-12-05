@@ -9,7 +9,6 @@ class BinaryTree:
     Constructor initializes key to value provided (root).
     Left and right child references are None.
     '''
-
     def __init__(self, root):
         self.key = root
         self.left_child = None
@@ -19,7 +18,6 @@ class BinaryTree:
     Create new binary tree and insert it as left child of
     current node.
     '''
-
     def insert_left(self, new_node):
         # if left child is None, create new node and modify
         # the left reference
@@ -37,7 +35,6 @@ class BinaryTree:
     Create new binary tree and insert it as right child of
     current node.
     '''
-
     def insert_right(self, new_node):
         # if there's no right child, create new node
         # and make it right child of current node
@@ -54,28 +51,24 @@ class BinaryTree:
     '''
     Return right subtree
     '''
-
     def get_right_child(self):
         return self.right_child
 
     '''
     Return left subtree
     '''
-
     def get_left_child(self):
         return self.left_child
 
     '''
     Modify the value of the current node
     '''
-
     def set_root_val(self, obj):
         self.key = obj
 
     '''
     Get the value of the current node
     '''
-
     def get_root_val(self):
         return self.key
 
@@ -95,5 +88,7 @@ def main():
     print(r.get_right_child().get_root_val())
 
 
+
 if __name__ == "__main__":
     main()
+

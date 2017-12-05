@@ -4,8 +4,6 @@ Implementation from the textbook (pdf version)
 
 
 def merge_sort(a_list):
-    print("Splitting ", a_list)
-
     if len(a_list) > 1:
         mid = len(a_list) // 2
         left_half = a_list[:mid]
@@ -36,10 +34,4 @@ def merge_sort(a_list):
             a_list[k] = right_half[j]
             j = j + 1
             k = k + 1
-
-    print("Merging ", a_list)
-
-
-a_list = [54, 26, 93, 17, 77, 31, 44, 55, 20]
-merge_sort(a_list)
-print(a_list)
+    return a_list

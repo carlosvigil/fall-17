@@ -1,17 +1,12 @@
-'''
-Implementation from the textbook (pdf version)
-'''
+"""From http://python3.codes/popular-sorting-algorithms/ """
 
 
-def bubble_sort(a_list):
-    for pass_num in range(len(a_list) - 1, 0, -1):
-        for i in range(pass_num):
-            if a_list[i] > a_list[i + 1]:
-                temp = a_list[i]
-                a_list[i] = a_list[i + 1]
-                a_list[i + 1] = temp
-
-
-a_list = [54, 26, 93, 17, 77, 31, 44, 55, 20]
-bubble_sort(a_list)
-print(a_list)
+def bubble_sort(seq):
+    changed = True
+    while changed:
+        changed = False
+        for i in range(len(seq) - 1):
+            if seq[i] > seq[i + 1]:
+                seq[i], seq[i + 1] = seq[i + 1], seq[i]
+                changed = True
+    return seq
